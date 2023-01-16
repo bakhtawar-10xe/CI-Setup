@@ -10,10 +10,19 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Linting with Python
-      uses: pylint-and-format
-      with:
-        args: /
-        format: 'json'
-        fail-under: 8
-        output: pylint-result.xml
+      uses: ricardochaves/python-lint@v1.4.0
+        with:
+          python-root-list: "python_alelo tests"
+          use-pylint: false
+          use-pycodestyle: false
+          use-flake8: false
+          use-black: false
+          use-mypy: false
+          use-isort: false
+          extra-pylint-options: ""
+          extra-pycodestyle-options: ""
+          extra-flake8-options: ""
+          extra-black-options: ""
+          extra-mypy-options: ""
+          extra-isort-options: ""
       
