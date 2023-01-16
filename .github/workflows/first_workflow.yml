@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Linting with Python
-      uses: vcoder4c/git_pylint@v3
+      uses: pylint-and-format
       with:
         args: /
         format: 'json'
