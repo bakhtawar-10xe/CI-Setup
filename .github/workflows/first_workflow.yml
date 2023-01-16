@@ -1,0 +1,19 @@
+name: Python test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Linting with Python
+      uses: pylint-actions/pylint@v1
+      with:
+        args: /
+        format: 'json'
+        fail-under: 8
+        output: pylint-result.xml
+      
