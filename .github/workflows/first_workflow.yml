@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Linting with Python
-      uses: pylint-actions/pylint@v1
+      uses: pylint-actions/pylint
       with:
         args: /
         format: 'json'
