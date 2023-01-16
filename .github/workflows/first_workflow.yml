@@ -10,5 +10,5 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Linting with Python
-      uses: pylint-github-actions
+      uses: python-actions/pylint@v1
       
