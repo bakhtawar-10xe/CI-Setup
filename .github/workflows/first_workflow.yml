@@ -20,14 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pylint
-          pip install flake8
 
       - name: Lint code
         run: |
-          pylint hello.py > lint_results.txt
-
-      - name: Upload lint results
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint_results
-          path: lint_results.txt
+          pylint hello.py 
