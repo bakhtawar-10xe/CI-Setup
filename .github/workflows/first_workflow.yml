@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -19,18 +19,20 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pylint
-        pip install flake8
+        python -m pip install pylint
+        python -m pip install flake8
 
     - name: Lint code
       run: |
-        git diff --name-only HEAD^1 | grep ".py$" | xargs pylint
-        git diff --name-only HEAD^1 | grep ".py$" | xargs flake8
+        for /f "tokens=*" %i in ('git diff --name-only HEAD^1') do @(echo %i| findstr ".py$" >nul) && pylint %i
+        for /f "tokens=*" %i in ('git diff --name-only HEAD^1') do @(echo %i| findstr ".py$" >nul) && flake8 %i
 
     - name: Check Pylint score
       run: |
-        PYLINT_SCORE=$(pylint --output-format=parseable $(git diff --name-only HEAD^1 | grep ".py$") | awk '{ if ($1 ~ /^[0-9]*\./) { total += $1 * 10 } } END { print total / NR }')
-        echo "Pylint Score: $PYLINT_SCORE"
-        if (( $(echo "$PYLINT_SCORE < 8" | bc -l) )); then
+        set PYLINT_SCORE=0
+        for /f "tokens=*" %i in ('git diff --name-only HEAD^1') do @(echo %i| findstr ".py$" >nul) && set /a PYLINT_SCORE += $(pylint --output-format=parseable %i | awk '{ if ($1 ~ /^[0-9]*\./) { total += $1 * 10 } } END { print total / NR }')
+        echo "Pylint Score: %PYLINT_SCORE%"
+        if %PYLINT_SCORE% lss 8 (
             echo "Pylint score is below 8, failing build."
             exit 1
+        )
