@@ -34,4 +34,3 @@ jobs:
         if (( $(echo "$PYLINT_SCORE < 8" | bc -l) )); then
             echo "Pylint score is below 8, failing build."
             exit 1
-        fi

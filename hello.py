@@ -1,5 +1,8 @@
+"""
+This module demonstrates the use of Pylint conventions.
+"""
 print("hello world")
-x = 2
-y = 3
-z = 3+  3+ x* y
-print(z)
+X = 2
+Y = 3
+Z = 3 + 3 + X * Y
+print(Z)
