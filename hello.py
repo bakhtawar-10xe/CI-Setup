@@ -6,5 +6,5 @@ X = 2
 Y = 3
 Z = 3 + 3 + X * Y
 print(Z)
-print(X, Z)
+print(X, X)
 

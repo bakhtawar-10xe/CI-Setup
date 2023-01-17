@@ -24,7 +24,7 @@ jobs:
 
       - name: Lint code
         run: |
-          pylint hello.py > output.txt
+          pylint hello.py > lint_results.txt
 
       - name: Upload lint results
         uses: actions/upload-artifact@v2
