@@ -24,10 +24,10 @@ jobs:
 
       - name: Lint code
         run: |
-          pylint --output-format=xml hello.py > log.xml
+          pylint --output-format=text hello.py > logs.txt
 
       - name: Upload logs
         uses: actions/upload-artifact@v2
         with:
           name: logs
-          path: logs.xml
+          path: logs.txt
