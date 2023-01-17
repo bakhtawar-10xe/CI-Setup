@@ -24,4 +24,4 @@ jobs:
 
       - name: Lint code
         run: |
-          pylint hello.py
+          pylint hello.py > $HOME/log.txt
