@@ -20,7 +20,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pylint
+          pip install flake8
 
       - name: Lint code
         run: |
-          pylint hello.py 
+          pylint hello.py > logs.txt
