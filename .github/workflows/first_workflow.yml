@@ -24,13 +24,27 @@ jobs:
 
     - name: Lint code
       run: |
-        for /f "tokens=*" %i in ('git diff --name-only HEAD^1') do @(echo %i| findstr ".py$" >nul) && pylint %i
-        for /f "tokens=*" %i in ('git diff --name-only HEAD^1') do @(echo %i| findstr ".py$" >nul) && flake8 %i
+        for /f "tokens=*" %%i in ('git diff --name-only HEAD^1') do (
+            echo %%i| findstr ".py$" >nul
+            if errorlevel 1 (
+                echo "%%i is not a python file"
+            ) else (
+                pylint %%i
+                flake8 %%i
+            )
+        )
 
     - name: Check Pylint score
       run: |
         set PYLINT_SCORE=0
-        for /f "tokens=*" %i in ('git diff --name-only HEAD^1') do @(echo %i| findstr ".py$" >nul) && set /a PYLINT_SCORE += $(pylint --output-format=parseable %i | awk '{ if ($1 ~ /^[0-9]*\./) { total += $1 * 10 } } END { print total / NR }')
+        for /f "tokens=*" %%i in ('git diff --name-only HEAD^1') do (
+            echo %%i| findstr ".py$" >nul
+            if errorlevel 1 (
+                echo "%%i is not a python file"
+            ) else (
+                set /a PYLINT_SCORE += $(pylint --output-format=parseable %%i | awk '{ if ($1 ~ /^[0-9]*\./) { total += $1 * 10 } } END { print total / NR }')
+            )
+        )
         echo "Pylint Score: %PYLINT_SCORE%"
         if %PYLINT_SCORE% lss 8 (
             echo "Pylint score is below 8, failing build."
