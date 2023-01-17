@@ -1,18 +1,37 @@
-name: Python test
+name: Pylint
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - '*.py'
 
 jobs:
-  build:
-    runs-on: windows-latest
+  lint:
+    runs-on: ubuntu-latest
     steps:
-    - name: Linting with Python
-      uses: gabriel-milan/action-pylint@v1
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}} # GitHub token
-        path: "./*.py" # Glob pattern for files to lint
-        fail: true # Fail the action if pylint errors are found
-        pr-message: true # Send a PR message if pylint errors are found
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        pip install pylint
+        pip install flake8
+
+    - name: Lint code
+      run: |
+        git diff --name-only HEAD^1 | grep ".py$" | xargs pylint
+        git diff --name-only HEAD^1 | grep ".py$" | xargs flake8
+
+    - name: Check Pylint score
+      run: |
+        PYLINT_SCORE=$(pylint --output-format=parseable $(git diff --name-only HEAD^1 | grep ".py$") | awk '{ if ($1 ~ /^[0-9]*\./) { total += $1 * 10 } } END { print total / NR }')
+        echo "Pylint Score: $PYLINT_SCORE"
+        if (( $(echo "$PYLINT_SCORE < 8" | bc -l) )); then
+            echo "Pylint score is below 8, failing build."
+            exit 1
+        fi
