@@ -27,7 +27,7 @@ jobs:
           pylint hello.py > output.txt
 
       - name: Upload lint results
-          uses: actions/upload-artifact@v2
-          with:
-            name: lint_results
-            path: lint_results.txt
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint_results
+          path: lint_results.txt
