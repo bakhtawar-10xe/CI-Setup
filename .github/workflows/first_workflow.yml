@@ -20,8 +20,9 @@ jobs:
         python -m pip install pylint
     - name: Run pylint
       run: |
+        echo "Starting pylint command..."
         git diff --name-only origin/main...HEAD | grep '\.py$' | xargs -I % sh -c 'pylint % -v --output-format=json > log.json'
-
+        echo "Pylint command completed..."
     - name: Upload log file
       uses: actions/upload-artifact@v2
       with:
