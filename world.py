@@ -5,6 +5,6 @@ print("hello world")
 X = 20
 Y = 43
 Z = 3 + 35 + X * Y
-print(Z)
+print(X)
 print(X, X)
 
