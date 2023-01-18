@@ -20,7 +20,7 @@ jobs:
         python -m pip install pylint
     - name: Get modified python files
       run: |
-        git status
+        cat hello.py
     - name: Upload log file
       uses: actions/upload-artifact@v2
       with:
