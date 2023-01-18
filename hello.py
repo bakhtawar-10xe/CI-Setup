@@ -5,5 +5,5 @@ print("hello world")
 X = 20
 Y = 0
 z = 3 + 3 + X * Y
-print(z)
+print(X)
 print(X, X)
