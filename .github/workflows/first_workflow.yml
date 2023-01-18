@@ -21,3 +21,9 @@ jobs:
     - name: Run pylint
       run: |
         git diff --name-only origin/main...HEAD | grep '\.py$' | xargs -I % sh -c 'pylint % --output-format=json > log.json'
+
+    - name: Upload log file
+      uses: actions/upload-artifact@v2
+      with:
+        name: log
+        path: log.json

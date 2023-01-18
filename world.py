@@ -6,5 +6,5 @@ X = 20
 Y = 43
 Z = 3 + 3 + X * Y
 print(Z)
-print(X, Z)
+print(X, X)
 
