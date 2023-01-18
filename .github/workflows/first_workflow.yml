@@ -18,13 +18,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install pylint
+    - name: Get modified python files
+      run: git diff --name-only origin/main...HEAD | grep '\.py$' > modified_files.txt
+
     - name: Run pylint
-      run: |
-        echo "Starting pylint command..."
-        git diff --name-only origin/main...HEAD | grep '\.py$' | xargs -I % sh -c 'pylint % -v --output-format=json > log.json'
-        echo "Pylint command completed..."
+      run: cat modified_files.txt | xargs -I % sh -c 'pylint % -r --output-format=json > log.json'
     - name: Upload log file
       uses: actions/upload-artifact@v2
       with:
         name: log
-        path: log.json
+        path: modified_files.txt
