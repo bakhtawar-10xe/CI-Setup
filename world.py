@@ -7,4 +7,3 @@ Y = 43
 Z = 3 + 35 + X * Y
 print(X)
 print(X, X)
-

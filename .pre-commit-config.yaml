@@ -3,6 +3,6 @@ repos:
   hooks:
   -   id: pylint
       name: Pylint
-      entry: sh -c 'pylint --output-format=colorized -r n | tee pylint.log'
+      entry: cmd /c "pylint > pylint.log"
       files: \.(py)$
       language: system
