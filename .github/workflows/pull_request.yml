@@ -1,0 +1,27 @@
+on: 
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        pip install pylint
+    - name: Run linter
+      run: |
+        # replace with the appropriate linter command for your project
+        pylint .
+    - name: Check linting status
+      id: check_lint
+      run: |
+        if [ $? -ne 0 ]; then
+          echo "Linting failed"
+          exit 1
+        fi
+    - name: Create Pull Request
+      if: steps.check_lint.outputs.status != 'failure'
+      run: echo "Creating Pull Request"
