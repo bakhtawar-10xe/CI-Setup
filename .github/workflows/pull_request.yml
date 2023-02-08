@@ -17,13 +17,3 @@ jobs:
       run: |
         # replace with the appropriate linter command for your project
         pylint_runner
-    - name: Check linting status
-      id: check_lint
-      run: |
-        if [ $? -ne 0 ]; then
-          echo "Linting failed"
-          exit 1
-        fi
-    - name: Create Pull Request
-      if: steps.check_lint.outputs.status != 'failure'
-      run: echo "Creating Pull Request"
