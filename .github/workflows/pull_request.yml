@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  lint:
+  lintonPR:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
